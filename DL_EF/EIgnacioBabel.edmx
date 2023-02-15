@@ -1,0 +1,382 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="EIgnacioBabelModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="IdCliente" />
+          </Key>
+          <Property Name="IdCliente" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ApellidoPaterno" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ApellidoMaterno" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="FechaModificacion" Type="datetime" />
+          <Property Name="IdPlanes" Type="int" />
+          <Property Name="IdCobertura" Type="int" />
+        </EntityType>
+        <EntityType Name="Cobertura">
+          <Key>
+            <PropertyRef Name="IdCobertura" />
+          </Key>
+          <Property Name="IdCobertura" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="50" />
+          <Property Name="FechaModificacionCobertura" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Planes">
+          <Key>
+            <PropertyRef Name="IdPlanes" />
+          </Key>
+          <Property Name="IdPlanes" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="FechaModificacionPlanes" Type="datetime" />
+        </EntityType>
+        <Association Name="FK_CoberturaCliente">
+          <End Role="Cobertura" Type="Self.Cobertura" Multiplicity="0..1" />
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cobertura">
+              <PropertyRef Name="IdCobertura" />
+            </Principal>
+            <Dependent Role="Cliente">
+              <PropertyRef Name="IdCobertura" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlanesCliente">
+          <End Role="Planes" Type="Self.Planes" Multiplicity="0..1" />
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Planes">
+              <PropertyRef Name="IdPlanes" />
+            </Principal>
+            <Dependent Role="Cliente">
+              <PropertyRef Name="IdPlanes" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="ClienteAdd" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Nombre" Type="varchar" Mode="In" />
+          <Parameter Name="ApellidoPaterno" Type="varchar" Mode="In" />
+          <Parameter Name="ApellidoMaterno" Type="varchar" Mode="In" />
+          <Parameter Name="IdPlanes" Type="int" Mode="In" />
+          <Parameter Name="IdCobertura" Type="int" Mode="In" />
+        </Function>
+        <Function Name="ClienteDelete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdCliente" Type="int" Mode="In" />
+        </Function>
+        <Function Name="ClienteGetAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="ClienteGetById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdCliente" Type="int" Mode="In" />
+        </Function>
+        <Function Name="ClienteUpdate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdCliente" Type="int" Mode="In" />
+          <Parameter Name="Nombre" Type="varchar" Mode="In" />
+          <Parameter Name="ApellidoPaterno" Type="varchar" Mode="In" />
+          <Parameter Name="ApellidoMaterno" Type="varchar" Mode="In" />
+          <Parameter Name="IdPlanes" Type="int" Mode="In" />
+          <Parameter Name="IdCobertura" Type="int" Mode="In" />
+        </Function>
+        <Function Name="CoberturaGetAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="PlanesAdd" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Descripcion" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="PlanesGetAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="PlanesGetById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdPlanes" Type="int" Mode="In" />
+        </Function>
+        <Function Name="PlanesUpdate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdPlanes" Type="int" Mode="In" />
+          <Parameter Name="Descripcion" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="EIgnacioBabelModelStoreContainer">
+          <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cobertura" EntityType="Self.Cobertura" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Planes" EntityType="Self.Planes" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_CoberturaCliente" Association="Self.FK_CoberturaCliente">
+            <End Role="Cobertura" EntitySet="Cobertura" />
+            <End Role="Cliente" EntitySet="Cliente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlanesCliente" Association="Self.FK_PlanesCliente">
+            <End Role="Planes" EntitySet="Planes" />
+            <End Role="Cliente" EntitySet="Cliente" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="EIgnacioBabelModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="IdCliente" />
+          </Key>
+          <Property Name="IdCliente" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ApellidoPaterno" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ApellidoMaterno" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
+          <Property Name="IdPlanes" Type="Int32" />
+          <Property Name="IdCobertura" Type="Int32" />
+          <NavigationProperty Name="Cobertura" Relationship="Self.FK_CoberturaCliente" FromRole="Cliente" ToRole="Cobertura" />
+          <NavigationProperty Name="Plane" Relationship="Self.FK_PlanesCliente" FromRole="Cliente" ToRole="Planes" />
+        </EntityType>
+        <EntityType Name="Cobertura">
+          <Key>
+            <PropertyRef Name="IdCobertura" />
+          </Key>
+          <Property Name="IdCobertura" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FechaModificacionCobertura" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Clientes" Relationship="Self.FK_CoberturaCliente" FromRole="Cobertura" ToRole="Cliente" />
+        </EntityType>
+        <EntityType Name="Plane">
+          <Key>
+            <PropertyRef Name="IdPlanes" />
+          </Key>
+          <Property Name="IdPlanes" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FechaModificacionPlanes" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Clientes" Relationship="Self.FK_PlanesCliente" FromRole="Planes" ToRole="Cliente" />
+        </EntityType>
+        <Association Name="FK_CoberturaCliente">
+          <End Role="Cobertura" Type="Self.Cobertura" Multiplicity="0..1" />
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cobertura">
+              <PropertyRef Name="IdCobertura" />
+            </Principal>
+            <Dependent Role="Cliente">
+              <PropertyRef Name="IdCobertura" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlanesCliente">
+          <End Role="Planes" Type="Self.Plane" Multiplicity="0..1" />
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Planes">
+              <PropertyRef Name="IdPlanes" />
+            </Principal>
+            <Dependent Role="Cliente">
+              <PropertyRef Name="IdPlanes" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EIgnacioBabelEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Clientes" EntityType="Self.Cliente" />
+          <EntitySet Name="Coberturas" EntityType="Self.Cobertura" />
+          <EntitySet Name="Planes" EntityType="Self.Plane" />
+          <AssociationSet Name="FK_CoberturaCliente" Association="Self.FK_CoberturaCliente">
+            <End Role="Cobertura" EntitySet="Coberturas" />
+            <End Role="Cliente" EntitySet="Clientes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlanesCliente" Association="Self.FK_PlanesCliente">
+            <End Role="Planes" EntitySet="Planes" />
+            <End Role="Cliente" EntitySet="Clientes" />
+          </AssociationSet>
+          <FunctionImport Name="ClienteAdd">
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="ApellidoPaterno" Mode="In" Type="String" />
+            <Parameter Name="ApellidoMaterno" Mode="In" Type="String" />
+            <Parameter Name="IdPlanes" Mode="In" Type="Int32" />
+            <Parameter Name="IdCobertura" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ClienteDelete">
+            <Parameter Name="IdCliente" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ClienteGetAll" ReturnType="Collection(EIgnacioBabelModel.ClienteGetAll_Result)" />
+          <FunctionImport Name="ClienteGetById" ReturnType="Collection(EIgnacioBabelModel.ClienteGetById_Result)">
+            <Parameter Name="IdCliente" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ClienteUpdate">
+            <Parameter Name="IdCliente" Mode="In" Type="Int32" />
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="ApellidoPaterno" Mode="In" Type="String" />
+            <Parameter Name="ApellidoMaterno" Mode="In" Type="String" />
+            <Parameter Name="IdPlanes" Mode="In" Type="Int32" />
+            <Parameter Name="IdCobertura" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="CoberturaGetAll" ReturnType="Collection(EIgnacioBabelModel.CoberturaGetAll_Result)" />
+          <FunctionImport Name="PlanesAdd">
+            <Parameter Name="Descripcion" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="PlanesGetAll" ReturnType="Collection(EIgnacioBabelModel.PlanesGetAll_Result)" />
+          <FunctionImport Name="PlanesGetById" ReturnType="Collection(EIgnacioBabelModel.PlanesGetById_Result)">
+            <Parameter Name="IdPlanes" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="PlanesUpdate">
+            <Parameter Name="IdPlanes" Mode="In" Type="Int32" />
+            <Parameter Name="Descripcion" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="ClienteGetAll_Result">
+          <Property Type="Int32" Name="IdCliente" Nullable="false" />
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="ApellidoPaterno" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="ApellidoMaterno" Nullable="false" MaxLength="50" />
+          <Property Type="DateTime" Name="FechaModificacion" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="IdPlanes" Nullable="true" />
+          <Property Type="String" Name="Descripcion" Nullable="false" MaxLength="100" />
+          <Property Type="DateTime" Name="FechaModificacionPlanes" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="IdCobertura" Nullable="true" />
+          <Property Type="String" Name="Descripcion1" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="FechaModificacionCobertura" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="ClienteGetById_Result">
+          <Property Type="Int32" Name="IdCliente" Nullable="false" />
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="ApellidoPaterno" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="ApellidoMaterno" Nullable="false" MaxLength="50" />
+          <Property Type="DateTime" Name="FechaModificacion" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="IdPlanes" Nullable="true" />
+          <Property Type="String" Name="Descripcion" Nullable="false" MaxLength="100" />
+          <Property Type="DateTime" Name="FechaModificacionPlanes" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="IdCobertura" Nullable="true" />
+          <Property Type="String" Name="Descripcion1" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="FechaModificacionCobertura" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="CoberturaGetAll_Result">
+          <Property Type="Int32" Name="IdCobertura" Nullable="false" />
+          <Property Type="String" Name="Descripcion" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="FechaModificacionCobertura" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="PlanesGetAll_Result">
+          <Property Type="Int32" Name="IdPlanes" Nullable="false" />
+          <Property Type="String" Name="Descripcion" Nullable="false" MaxLength="100" />
+          <Property Type="DateTime" Name="FechaModificacionPlanes" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="PlanesGetById_Result">
+          <Property Type="Int32" Name="IdPlanes" Nullable="false" />
+          <Property Type="String" Name="Descripcion" Nullable="false" MaxLength="100" />
+          <Property Type="DateTime" Name="FechaModificacionPlanes" Nullable="true" Precision="23" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="EIgnacioBabelModelStoreContainer" CdmEntityContainer="EIgnacioBabelEntities">
+          <EntitySetMapping Name="Clientes">
+            <EntityTypeMapping TypeName="EIgnacioBabelModel.Cliente">
+              <MappingFragment StoreEntitySet="Cliente">
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="ApellidoPaterno" ColumnName="ApellidoPaterno" />
+                <ScalarProperty Name="ApellidoMaterno" ColumnName="ApellidoMaterno" />
+                <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+                <ScalarProperty Name="IdPlanes" ColumnName="IdPlanes" />
+                <ScalarProperty Name="IdCobertura" ColumnName="IdCobertura" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Coberturas">
+            <EntityTypeMapping TypeName="EIgnacioBabelModel.Cobertura">
+              <MappingFragment StoreEntitySet="Cobertura">
+                <ScalarProperty Name="IdCobertura" ColumnName="IdCobertura" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="FechaModificacionCobertura" ColumnName="FechaModificacionCobertura" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Planes">
+            <EntityTypeMapping TypeName="EIgnacioBabelModel.Plane">
+              <MappingFragment StoreEntitySet="Planes">
+                <ScalarProperty Name="IdPlanes" ColumnName="IdPlanes" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="FechaModificacionPlanes" ColumnName="FechaModificacionPlanes" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="ClienteAdd" FunctionName="EIgnacioBabelModel.Store.ClienteAdd" />
+          <FunctionImportMapping FunctionImportName="ClienteDelete" FunctionName="EIgnacioBabelModel.Store.ClienteDelete" />
+          <FunctionImportMapping FunctionImportName="ClienteGetAll" FunctionName="EIgnacioBabelModel.Store.ClienteGetAll">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EIgnacioBabelModel.ClienteGetAll_Result">
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="ApellidoPaterno" ColumnName="ApellidoPaterno" />
+                <ScalarProperty Name="ApellidoMaterno" ColumnName="ApellidoMaterno" />
+                <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+                <ScalarProperty Name="IdPlanes" ColumnName="IdPlanes" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="FechaModificacionPlanes" ColumnName="FechaModificacionPlanes" />
+                <ScalarProperty Name="IdCobertura" ColumnName="IdCobertura" />
+                <ScalarProperty Name="Descripcion1" ColumnName="Descripcion1" />
+                <ScalarProperty Name="FechaModificacionCobertura" ColumnName="FechaModificacionCobertura" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ClienteGetById" FunctionName="EIgnacioBabelModel.Store.ClienteGetById">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EIgnacioBabelModel.ClienteGetById_Result">
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="ApellidoPaterno" ColumnName="ApellidoPaterno" />
+                <ScalarProperty Name="ApellidoMaterno" ColumnName="ApellidoMaterno" />
+                <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+                <ScalarProperty Name="IdPlanes" ColumnName="IdPlanes" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="FechaModificacionPlanes" ColumnName="FechaModificacionPlanes" />
+                <ScalarProperty Name="IdCobertura" ColumnName="IdCobertura" />
+                <ScalarProperty Name="Descripcion1" ColumnName="Descripcion1" />
+                <ScalarProperty Name="FechaModificacionCobertura" ColumnName="FechaModificacionCobertura" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ClienteUpdate" FunctionName="EIgnacioBabelModel.Store.ClienteUpdate" />
+          <FunctionImportMapping FunctionImportName="CoberturaGetAll" FunctionName="EIgnacioBabelModel.Store.CoberturaGetAll">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EIgnacioBabelModel.CoberturaGetAll_Result">
+                <ScalarProperty Name="IdCobertura" ColumnName="IdCobertura" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="FechaModificacionCobertura" ColumnName="FechaModificacionCobertura" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="PlanesAdd" FunctionName="EIgnacioBabelModel.Store.PlanesAdd" />
+          <FunctionImportMapping FunctionImportName="PlanesGetAll" FunctionName="EIgnacioBabelModel.Store.PlanesGetAll">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EIgnacioBabelModel.PlanesGetAll_Result">
+                <ScalarProperty Name="IdPlanes" ColumnName="IdPlanes" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="FechaModificacionPlanes" ColumnName="FechaModificacionPlanes" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="PlanesGetById" FunctionName="EIgnacioBabelModel.Store.PlanesGetById">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EIgnacioBabelModel.PlanesGetById_Result">
+                <ScalarProperty Name="IdPlanes" ColumnName="IdPlanes" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="FechaModificacionPlanes" ColumnName="FechaModificacionPlanes" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="PlanesUpdate" FunctionName="EIgnacioBabelModel.Store.PlanesUpdate" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
